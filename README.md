@@ -35,3 +35,8 @@ Where to share: upload all the source code on git repo. and share it with us.
  
 
 NOTE: Please try to finish all the parts of the interview, but if you cannot finish the complete practical just share things which you have done and we will review your profile based on your submisNOTE: Please try to finish all the parts of the interview, but if you cannot finish the complete practical just share things which you have done and we will review your profile based on your submission.  
+
+////
+Insert Admin
+
+db.users.insert( { name: "Classic005",email: "classic@email.com",password: "password",  role:"Admin",mobile: "789-456-3120" } )
