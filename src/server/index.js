@@ -1,6 +1,6 @@
 const express = require('express');
 const userRoutes = require('../routes/users');
-// const recruiterRoutes = require('../routes/recruiters');
+const postRoutes = require('../routes/posts');
 // const clientRoutes = require('../routes/clients');
 require('../database')
 
@@ -10,7 +10,6 @@ const server = express();
 server.use(express.json());
 
 server.use('/api/users', userRoutes);
-// server.use('/api/recruiters', recruiterRoutes);
-// server.use('/api/clients', clientRoutes);
+server.use('/api/posts', postRoutes);
 
 module.exports = server;

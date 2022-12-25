@@ -7,9 +7,11 @@ const getUser = async (id) => {
     return await User.findById(id);
 };
 
+const getrecruiter = async () => {
+    return await User.aggregate([{ $match : { role : "recruiter" || "Recruiter" } },{ $sample: { size: 1 } } ])
+};
+
 const loginUser =  async (email, password) => {
-    console.log('email ---------- ', email);
-    console.log('password ---------- ', password);
     return await User.findOne({email, password});
 };
 
@@ -26,5 +28,6 @@ module.exports = {
     updateUser,
     getUser,
     loginUser,
-    deleteUser
+    deleteUser,
+    getrecruiter
 }

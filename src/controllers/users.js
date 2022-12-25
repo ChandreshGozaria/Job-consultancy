@@ -5,9 +5,8 @@ const jwt = require('jsonwebtoken');
 const loginUser = async (req, res) => {
     try {
 
-        console.log('req.body', req.body.email)
         const user = await userService.loginUser(req.body.email, req.body.password);
-        console.log('user', user);
+
         if (user) {
 
             let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -19,6 +18,8 @@ const loginUser = async (req, res) => {
 
             const token = jwt.sign(data, jwtSecretKey);
             res.status(200).send({ data: user, token, status: "success" });
+        } else {
+            res.status(404).send("User not found.");
         }
 
     } catch (err) {
@@ -31,9 +32,8 @@ const createUser = async (req, res) => {
     try {
 
         const token = req.header(process.env.TOKEN_HEADER_KEY);
-
         const verified = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log('verified ----------------', verified);
+        
         if (verified.role === 'Admin' || verified.role === 'admin') {
             if (req.body.role === 'client' || req.body.role === 'Client' || req.body.role === 'recruiter' || req.body.role === 'Recruiter') {
                 const user = await userService.createUser(req.body);
@@ -59,6 +59,9 @@ const getUserById = async (req, res) => {
         if (verified.role === 'Admin' || verified.role === 'admin') {
 
             const user = await userService.getUser(req.params.userId);
+            if (!user) {
+                return res.status(404).send("User not found.");
+            }
             res.status(200).send({ data: user, status: "success" });
         } else {
 
@@ -84,6 +87,9 @@ const updateUser = async (req, res) => {
         if (verified.role === 'Admin' || verified.role === 'admin') {
 
             const user = await userService.updateUser(req.params.userId, req.body);
+            if (!user) {
+                return res.status(404).send("User not found.");
+            }
             res.status(201).send({ data: user, status: "success" });
         } else {
 
@@ -107,16 +113,15 @@ const deleteUser = async (req, res) => {
 
         if (verified.role === 'Admin' || verified.role === 'admin') {
 
-            console.log('------------------------------------- 001', req.params.userId);
             const getUser = await userService.getUser(req.params.userId);
-            console.log('getUser ----------------------------- 002', getUser.role);
+            if (!getUser) {
+                return res.status(404).send("User not found.");
+            }
             if (getUser.role === "Admin" || getUser.role === "admin") {
-               
+
                 return res.status(403).send("You don't have permission for delete the role");
             } else {
-                console.log(' -------------------------------- 003', getUser.role)
                 const user = await userService.deleteUser(req.params.userId);
-                console.log(' -------------------------------- 004', user)
                 return res.json({ data: user, status: "success" });
             }
         } else {
