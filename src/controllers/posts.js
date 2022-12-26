@@ -38,9 +38,10 @@ const getAllPost = async (req, res) => {
         const token = req.header(process.env.TOKEN_HEADER_KEY);
         const verified = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-        if (verified.role === 'Client' || verified.role === 'client') {
-
-            const post = await postService.getPost(verified.id);
+        if (verified.role === 'Client' || verified.role === 'client' || verified.role === 'Recruiter' || verified.role === 'recruiter') {
+            
+            let query = verified.role.toLowerCase() === 'client' ? {clientId:verified.id} : {recruiterId:verified.id}
+            const post = await postService.getPost(query);
             if (!post) {
                 return res.status(404).send("Post not found.");
             }
