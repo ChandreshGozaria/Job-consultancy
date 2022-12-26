@@ -1,3 +1,15 @@
+////
+1.Insert Admin
+
+db.users.insert( { name: "Classic005",email: "classic@email.com",password: "password",  role:"Admin",mobile: "789-456-3120" } )
+
+2. npm install
+
+3. update env
+
+4. npm run dev
+
+
 Practical Test:
 
 Users:
@@ -28,15 +40,3 @@ Client
 -> no selected schema field for the post, and other schemas, you can choose as per your knowledge.
 -> you need to create nodejs API with role-based access
 
-
-Technologies: MongoDB, NodeJS
-Where to share: upload all the source code on git repo. and share it with us. 
-
- 
-
-NOTE: Please try to finish all the parts of the interview, but if you cannot finish the complete practical just share things which you have done and we will review your profile based on your submisNOTE: Please try to finish all the parts of the interview, but if you cannot finish the complete practical just share things which you have done and we will review your profile based on your submission.  
-
-////
-Insert Admin
-
-db.users.insert( { name: "Classic005",email: "classic@email.com",password: "password",  role:"Admin",mobile: "789-456-3120" } )
